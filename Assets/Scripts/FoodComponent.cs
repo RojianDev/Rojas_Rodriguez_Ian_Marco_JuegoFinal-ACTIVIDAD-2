@@ -9,6 +9,7 @@ public class FoodComponent : MonoBehaviour
         {
             OguriController player = other.GetComponent<OguriController>();
             player.hunger.CurrentHunger += recoverAmount;
+            Destroy(gameObject);
         }
     }
 }

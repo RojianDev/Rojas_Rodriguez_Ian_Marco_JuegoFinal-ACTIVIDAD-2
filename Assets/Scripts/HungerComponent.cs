@@ -19,6 +19,7 @@ public class HungerComponent : MonoBehaviour
     void Update()
     {
         reduceHunger();
+        CheckHunger();
     }
 
     void reduceHunger()
@@ -32,7 +33,7 @@ public class HungerComponent : MonoBehaviour
     {
         if(CurrentHunger <= 0)
         {
-            //GameOver
+            GameOver.Instance.PlayerLose();
         }
     }
 

@@ -7,6 +7,7 @@ public class Goal : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Debug.Log("Winner, Game Over");
+            GameOver.Instance.Winner();
         }
     }
 }

@@ -10,6 +10,7 @@ public class OguriController : MonoBehaviour
     [SerializeField] Transform groundCheck;
     [SerializeField] float GroundDistance = 0.4f;
     [SerializeField] LayerMask groundMask;
+    [SerializeField] Animator anim;
     public HungerComponent hunger;
     
     [Header("Actions")]
@@ -42,6 +43,8 @@ public class OguriController : MonoBehaviour
     private float turnSmoothVelocity;
 
     private bool isSprinting;
+
+    public bool canMove = true;
 
     void Awake()
     {
@@ -76,6 +79,10 @@ public class OguriController : MonoBehaviour
 
     void Update()
     {
+        if(!canMove)
+        {
+            return;
+        }
         //handleGravity();
         isGrounded = Physics.CheckSphere(groundCheck.position, GroundDistance, groundMask);
         if(isGrounded && velocity.y < 0)
@@ -87,6 +94,9 @@ public class OguriController : MonoBehaviour
         controller.Move(velocity* Time.deltaTime);
 
         Speed = isSprinting ? SprintSpeed: MoveSpeed;
+
+        
+
         hunger.ReduceAmount = isSprinting ? sprintReduction : normalReduction;
         
         if(currentMovement.magnitude >= 0.1f)
@@ -100,7 +110,10 @@ public class OguriController : MonoBehaviour
             Vector3 moveDirection = Quaternion.Euler(0f,targetAngle,0f) * Vector3.forward;
 
             controller.Move(moveDirection.normalized* Speed * Time.deltaTime);
+            
         }
+        anim.SetFloat("Movement", currentMovement.magnitude);
+        anim.SetBool("IsSprint", isSprinting);
 
 
         
